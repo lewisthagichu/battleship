@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1698386996703" clover="3.2.0">
+  <project timestamp="1698386996703" name="All files">
+    <metrics statements="21" coveredstatements="19" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="5" elements="33" coveredelements="26" complexity="0" loc="21" ncloc="21" packages="1" files="1" classes="1"/>
+    <file name="ship.js" path="/home/lewis/Desktop/Projects/2023/Oct/battleship/src/ship.js">
+      <metrics statements="21" coveredstatements="19" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="5"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="4" type="stmt"/>
+      <line num="3" count="4" type="stmt"/>
+      <line num="4" count="4" type="stmt"/>
+      <line num="5" count="4" type="stmt"/>
+      <line num="6" count="4" type="stmt"/>
+      <line num="8" count="4" type="stmt"/>
+      <line num="9" count="4" type="stmt"/>
+      <line num="10" count="4" type="stmt"/>
+      <line num="11" count="4" type="stmt"/>
+      <line num="12" count="4" type="stmt"/>
+      <line num="14" count="4" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="18" count="4" type="stmt"/>
+      <line num="19" count="10" type="stmt"/>
+      <line num="20" count="10" type="cond" truecount="2" falsecount="0"/>
+      <line num="23" count="4" type="stmt"/>
+      <line num="24" count="2" type="stmt"/>
+      <line num="27" count="4" type="stmt"/>
+      <line num="28" count="0" type="stmt"/>
+      <line num="31" count="4" type="stmt"/>
+    </file>
+  </project>
+</coverage>
