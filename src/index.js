@@ -1,3 +1,5 @@
-import ship from './ship';
+import createShip from './ship';
 
-console.log(ship('battleship', 3));
+const battleship = createShip('battleship', 4);
+
+console.log(battleship.getName());
