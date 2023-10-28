@@ -1,44 +1,25 @@
-const createShip = (shipName, shipLength) => {
-  let name = shipName;
-  let length = shipLength;
-  let timesHit = 0;
-  let isSunk = false;
-  let isFound = false;
-
-  const getName = () => name;
-  const getLength = () => length;
-  const getFound = () => isFound;
-  const getTimesHit = () => timesHit;
-  const getSunk = () => isSunk;
-
-  const found = () => {
-    isFound = true;
-  };
+const Ship = (name, length) => {
+  const shipName = name;
+  const shipLength = length;
+  const hits = Array(length).fill(false);
+  console.log(hits);
 
   const hit = () => {
-    timesHit += 1;
-    if (timesHit === length) sunk();
+    const indexOfFalse = hits.findIndex((item) => item === false);
+    if (indexOfFalse !== -1) {
+      hits[indexOfFalse] = true;
+    }
   };
 
-  const sunk = () => {
-    isSunk = true;
+  const isSunk = () => {
+    return hits.every((hit) => hit);
   };
 
-  const resetFound = () => {
-    isFound = false;
-  };
-
-  return {
-    getName,
-    getLength,
-    getFound,
-    getTimesHit,
-    getSunk,
-    hit,
-    sunk,
-    found,
-    resetFound,
-  };
+  return { shipName, shipLength, hits, hit, isSunk };
 };
 
-export default createShip;
+const ship = Ship('cruiser', 3);
+
+console.log(ship);
+
+// export default Ship;
