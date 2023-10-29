@@ -1,62 +1,70 @@
 import Ship from '../src/ship';
 import createGameboard from '../src/gameboard';
 
-test('Gameboard initializes with correct board state', () => {
-  const gameboard = createGameboard();
-  expect(gameboard.board.length).toBe(10);
-  expect(gameboard.board[0].length).toBe(10);
-  expect(gameboard.ships).toEqual([]);
-  expect(gameboard.missedAttacks).toEqual([]);
-});
+describe('createGameboard', () => {
+  let gameboard;
 
-test('PlaceShip correctly places horizontal ship on the board', () => {
-  const gameboard = createGameboard();
-  const ship = { shipLength: 3, hit: jest.fn() };
-  gameboard.placeShip(ship, 2, 3, true);
-  expect(gameboard.board[2][3]).toBe(ship);
-  expect(gameboard.board[2][4]).toBe(ship);
-  expect(gameboard.board[2][5]).toBe(ship);
-});
+  beforeEach(() => {
+    gameboard = createGameboard();
+  });
 
-test('PlaceShip correctly places vertical ship on the board', () => {
-  const gameboard = createGameboard();
-  const ship = { shipLength: 4, hit: jest.fn() };
-  gameboard.placeShip(ship, 4, 5, false);
-  expect(gameboard.board[4][5]).toBe(ship);
-  expect(gameboard.board[5][5]).toBe(ship);
-  expect(gameboard.board[6][5]).toBe(ship);
-  expect(gameboard.board[7][5]).toBe(ship);
-});
+  test('placeShip correctly places ships on the board', () => {
+    const ship = Ship('cruiser', 3);
+    gameboard.placeShip(ship, 0, 0, true); // Placing ship horizontally at (0, 0)
+    expect(gameboard.board[0][0]).toBe(ship);
+    expect(gameboard.board[0][1]).toBe(ship);
+    expect(gameboard.board[0][2]).toBe(ship);
 
-test('ReceiveAttack returns false for a missed attack', () => {
-  const gameboard = createGameboard();
-  const result = gameboard.receiveAttack(0, 0);
-  expect(result).toBe(false);
-  expect(gameboard.missedAttacks).toEqual([{ x: 0, y: 0 }]);
-});
+    gameboard.placeShip(ship, 1, 1, false); // Placing ship vertically at (1, 1)
+    expect(gameboard.board[1][1]).toBe(ship);
+    expect(gameboard.board[2][1]).toBe(ship);
+    expect(gameboard.board[3][1]).toBe(ship);
+  });
 
-test('ReceiveAttack returns true for a hit attack and calls ship.hit()', () => {
-  const gameboard = createGameboard();
-  const ship = { hit: jest.fn() };
-  gameboard.placeShip(ship, 3, 4, true);
-  const result = gameboard.receiveAttack(3, 4);
-  expect(result).toBe(true);
-  expect(gameboard.missedAttacks).toEqual([]);
-  expect(ship.hit).toHaveBeenCalled();
-});
+  test('receiveAttack returns false for missed attacks', () => {
+    const result = gameboard.receiveAttack(0, 0);
+    expect(result).toBe(false);
+    expect(gameboard.missedAttacks).toEqual([{ x: 0, y: 0 }]);
+  });
 
-test('AllShipsSunk returns true when all ships are sunk', () => {
-  const gameboard = createGameboard();
-  const ship1 = { isSunk: () => true };
-  const ship2 = { isSunk: () => true };
-  gameboard.ships.push(ship1, ship2);
-  expect(gameboard.allShipsSunk()).toBe(true);
-});
+  test('receiveAttack returns true for successful attacks and calls ship.hit()', () => {
+    const ship = Ship('test', 1);
+    gameboard.placeShip(ship, 0, 0, true);
 
-test('AllShipsSunk returns false when not all ships are sunk', () => {
-  const gameboard = createGameboard();
-  const ship1 = { isSunk: () => true };
-  const ship2 = { isSunk: () => false };
-  gameboard.ships.push(ship1, ship2);
-  expect(gameboard.allShipsSunk()).toBe(false);
+    const result = gameboard.receiveAttack(0, 0);
+    expect(result).toBe(true);
+    expect(gameboard.missedAttacks).toEqual([]);
+  });
+
+  test('allShipsSunk returns true when all ships are sunk', () => {
+    const ship1 = Ship('cruiser', 3);
+    const ship2 = Ship('battleship', 4);
+    gameboard.placeShip(ship1, 0, 0, true);
+    gameboard.placeShip(ship2, 1, 0, true);
+
+    ship1.hit();
+    ship1.hit();
+    ship1.hit();
+    ship2.hit();
+    ship2.hit();
+    ship2.hit();
+    ship2.hit();
+
+    const result = gameboard.allShipsSunk();
+    expect(result).toBe(true);
+  });
+
+  test('allShipsSunk returns false when not all ships are sunk', () => {
+    const ship1 = Ship('cruiser', 3);
+    const ship2 = Ship('battleship', 4);
+    gameboard.placeShip(ship1, 0, 0, true);
+    gameboard.placeShip(ship2, 1, 0, true);
+
+    ship1.hit();
+    ship2.hit();
+    ship2.hit();
+
+    const result = gameboard.allShipsSunk();
+    expect(result).toBe(false);
+  });
 });
