@@ -1,4 +1,4 @@
-const createSmartPlayer = () => {
+const createPlayer = () => {
   const attackedCoordinates = [];
 
   const attackEnemy = (enemyGameboard) => {
@@ -8,19 +8,30 @@ const createSmartPlayer = () => {
       y = getRandomCoordinate();
     } else {
       const lastHit = attackedCoordinates[attackedCoordinates.length - 1];
-      const adjacentCoordinates = getAdjacentCoordinates(lastHit);
-      const validAdjacentCoordinates = adjacentCoordinates.filter((coord) =>
-        isCoordinateValid(coord, attackedCoordinates)
-      );
 
-      if (validAdjacentCoordinates.length > 0) {
-        const randomIndex = Math.floor(
-          Math.random() * validAdjacentCoordinates.length
+      // Check if the last hit was a successful hit
+      if (enemyGameboard.board[lastHit.x][lastHit.y] !== null) {
+        // Get adjacent coordinates only if the last hit was a ship
+        const adjacentCoordinates = getAdjacentCoordinates(lastHit);
+        const validAdjacentCoordinates = adjacentCoordinates.filter((coord) =>
+          isCoordinateValid(coord, attackedCoordinates)
         );
-        const selectedCoord = validAdjacentCoordinates[randomIndex];
-        x = selectedCoord.x;
-        y = selectedCoord.y;
+
+        if (validAdjacentCoordinates.length > 0) {
+          // If there are valid adjacent coordinates, select one of them randomly
+          const randomIndex = Math.floor(
+            Math.random() * validAdjacentCoordinates.length
+          );
+          const selectedCoord = validAdjacentCoordinates[randomIndex];
+          x = selectedCoord.x;
+          y = selectedCoord.y;
+        } else {
+          // If no valid adjacent coordinates, attack randomly
+          x = getRandomCoordinate();
+          y = getRandomCoordinate();
+        }
       } else {
+        // If the last hit was a miss, attack randomly
         x = getRandomCoordinate();
         y = getRandomCoordinate();
       }
@@ -51,8 +62,4 @@ const createSmartPlayer = () => {
   };
 };
 
-// Example usage:
-const smartPlayer = createSmartPlayer();
-const enemyGameboard = createGameboard(); // Assume you have a createGameboard function
-const result = smartPlayer.attackEnemy(enemyGameboard);
-console.log(result); // Logs the attack coordinate and whether it's a hit or miss
+export default createPlayer;

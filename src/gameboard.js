@@ -6,14 +6,14 @@ const createGameboard = () => {
   const ships = [];
   const missedAttacks = [];
 
-  const placeShip = (shipName, x, y, isHorizontal) => {
+  const placeShip = (ship, x, y, isHorizontal) => {
     if (isHorizontal) {
       for (let i = 0; i < ship.shipLength; i++) {
-        board[x][y + i] = shipName;
+        board[x][y + i] = ship;
       }
     } else {
       for (let i = 0; i < ship.shipLength; i++) {
-        board[x + i][y] = shipName;
+        board[x + i][y] = ship;
       }
     }
     ships.push(ship);
@@ -25,6 +25,7 @@ const createGameboard = () => {
       return false;
     } else {
       const ship = board[x][y];
+      console.log(ship);
       ship.hit();
       return true;
     }
@@ -43,9 +44,3 @@ const createGameboard = () => {
 };
 
 export default createGameboard;
-
-// Example usage:
-// const gameboard = createGameboard();
-// const battleship = createShip('Battleship', 4);
-// gameboard.placeShip(battleship, 2, 3, true);
-// console.log(gameboard.receiveAttack(2, 3));

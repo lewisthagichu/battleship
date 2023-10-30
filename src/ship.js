@@ -2,7 +2,6 @@ const Ship = (name, length) => {
   const shipName = name;
   const shipLength = length;
   const hits = Array(length).fill(false);
-  console.log(hits);
 
   const hit = () => {
     const indexOfFalse = hits.findIndex((item) => item === false);
@@ -18,8 +17,4 @@ const Ship = (name, length) => {
   return { shipName, shipLength, hits, hit, isSunk };
 };
 
-const ship = Ship('cruiser', 3);
-
-console.log(ship);
-
-// export default Ship;
+export default Ship;
