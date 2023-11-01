@@ -1,7 +1,11 @@
+import Ship from './ship';
+import createPlayer from './player';
+import createGameboard from './gameboard';
+
 const createGame = () => {
   // Create players and gameboards
   const player1 = createPlayer('Player 1');
-  const player2 = createSmartPlayer('Computer');
+  const player2 = createPlayer('Computer');
   const player1Gameboard = createGameboard();
   const player2Gameboard = createGameboard();
 
@@ -12,21 +16,18 @@ const createGame = () => {
   // Define the playTurn function
   const playTurn = (x, y) => {
     // Player 1's turn
-    const player1Result = player1Gameboard.receiveAttack(x, y);
-    if (player1Gameboard.allShipsSunk()) {
-      // Player 1 wins
+    const player1Result = player2Gameboard.receiveAttack(x, y); // Attack player2Gameboard (Computer)
+    if (player2Gameboard.allShipsSunk()) {
+      // Player 1 wins if all computer's ships are sunk
       console.log('Player 1 wins!');
       return;
     }
 
     // Player 2 (Computer) turn
-    const computerMove = player2.attackEnemy(player1Gameboard);
-    const computerResult = player1Gameboard.receiveAttack(
-      computerMove.x,
-      computerMove.y
-    );
+    const computerMove = player1.attackEnemy(player1Gameboard); // Attack player1Gameboard
+
     if (player1Gameboard.allShipsSunk()) {
-      // Computer wins
+      // Computer wins if all player's ships are sunk
       console.log('Computer wins!');
       return;
     }
@@ -49,7 +50,7 @@ const placeShipsRandomly = (gameboard) => {
       const x = Math.floor(Math.random() * 10); // Random row index
       const y = Math.floor(Math.random() * 10); // Random column index
 
-      if (gameboard.placeShip(createShip(length), x, y, isHorizontal)) {
+      if (gameboard.placeShip(Ship(length), x, y, isHorizontal)) {
         // Attempt to place the ship on the gameboard
         placed = true; // Ship placed successfully
       }
@@ -60,3 +61,5 @@ const placeShipsRandomly = (gameboard) => {
 // Example usage:
 const gameboard = createGameboard();
 placeShipsRandomly(gameboard);
+
+export default createGame;
