@@ -1,4 +1,6 @@
 import createGame from '../src/game';
+import createGameboard from '../src/gameboard';
+import Ship from '../src/ship';
 
 describe('Game Logic', () => {
   test('Player 1 wins the game', () => {
@@ -7,8 +9,8 @@ describe('Game Logic', () => {
     const player2Gameboard = createGameboard();
 
     // Manually place ships for player 2
-    player2Gameboard.placeShip(createShip(5), 0, 0, true);
-    player2Gameboard.placeShip(createShip(4), 1, 1, false);
+    player2Gameboard.placeShip(Ship(5), 0, 0, true);
+    player2Gameboard.placeShip(Ship(4), 1, 1, false);
 
     // Player 1 attacks player 2's ships and sinks them
     game.playTurn(0, 0);
@@ -27,8 +29,8 @@ describe('Game Logic', () => {
     const player2Gameboard = createGameboard();
 
     // Manually place ships for player 1
-    player1Gameboard.placeShip(createShip(5), 0, 0, true);
-    player1Gameboard.placeShip(createShip(4), 1, 1, false);
+    player1Gameboard.placeShip(Ship(5), 0, 0, true);
+    player1Gameboard.placeShip(Ship(4), 1, 1, false);
 
     // Player 2 (Computer) attacks player 1's ships and sinks them
     game.playTurn(0, 0);
