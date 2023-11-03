@@ -1,19 +1,14 @@
 import createGameboard from './gameboard';
 import createPlayer from './player';
 import Ship from './ship';
+import renderGameboards from './dom';
+import createGame from './game';
 
-// Example usage:
-const playerShip = Ship('cruiser', 3);
-const computerShip = Ship('battleship', 4);
-console.log(playerShip);
+// Set up game elements and start the game
+const player1Gameboard = createGameboard();
+const player2Gameboard = createGameboard();
 
-const playerGameboard = createGameboard();
-const compGameboard = createGameboard();
-playerGameboard.placeShip(playerShip, 4, 5, true);
-compGameboard.placeShip(computerShip, 4, 5, true);
+// Render initial gameboards
+renderGameboards(player1Gameboard, player2Gameboard);
 
-const compPlayer = createPlayer();
-const player1 = createPlayer();
-
-const result = compPlayer.attackEnemy(playerGameboard);
-console.log(result); // Logs the attack coordinate and whether it's a hit or miss
+createGame();

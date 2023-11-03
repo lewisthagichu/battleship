@@ -1,6 +1,7 @@
 import Ship from './ship';
 import createPlayer from './player';
 import createGameboard from './gameboard';
+import renderGameboards from './dom';
 
 const createGame = () => {
   // Create players and gameboards
@@ -57,9 +58,5 @@ const placeShipsRandomly = (gameboard) => {
     }
   }
 };
-
-// Example usage:
-const gameboard = createGameboard();
-placeShipsRandomly(gameboard);
 
 export default createGame;

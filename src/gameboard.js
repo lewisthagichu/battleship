@@ -10,11 +10,17 @@ const createGameboard = () => {
     if (isHorizontal) {
       for (let i = 0; i < ship.shipLength; i++) {
         board[x][y + i] = ship;
+        console.log(board[x][y + i]);
+        return true;
       }
-    } else {
+    } else if (!isHorizontal) {
       for (let i = 0; i < ship.shipLength; i++) {
         board[x + i][y] = ship;
+        console.log(board[x + i][y]);
+        return true;
       }
+    } else {
+      console.log('unsuccesful');
     }
     ships.push(ship);
   };
