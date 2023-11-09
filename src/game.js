@@ -33,7 +33,6 @@ const createGame = () => {
       return;
     }
 
-    // Render the updated gameboards using the DOM interaction module
     renderGameboards(player1Gameboard, player2Gameboard);
   };
 
